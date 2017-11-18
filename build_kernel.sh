@@ -24,7 +24,7 @@ KERNEL_NAME="Stock-Kernel"
 
 KERNEL_VARIANT="kltekor"	# only one variant at a time
 
-KERNEL_VERSION="Linaro-7.2"   # leave as such, if no specific version tag
+KERNEL_VERSION="v1-Linaro-7.2"   # leave as such, if no specific version tag
 
 KERNEL_DATE="$(date +"%Y%m%d")"
 
