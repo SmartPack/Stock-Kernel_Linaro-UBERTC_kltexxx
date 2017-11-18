@@ -62,7 +62,7 @@ if [ "klte" == "$KERNEL_VARIANT" ]; then
 	cp scripts/mkcompile_h release/
 	cp arch/arm/configs/lineage_klte_defconfig release/
 	# updating kernel name
-	sed -i "s;SmartPack-Kernel;$KERNEL_NAME-$KERNEL_VARIANT;" scripts/mkcompile_h;
+	sed -i "s;Stock-Kernel;$KERNEL_NAME-$KERNEL_VARIANT;" scripts/mkcompile_h;
 	# updating kernel version
 	sed -i "s;lineageos;$KERNEL_VERSION;" arch/arm/configs/lineage_klte_defconfig;
 	if [ -e output_eur/.config ]; then
@@ -121,7 +121,7 @@ if [ "kltekor" == "$KERNEL_VARIANT" ]; then
 	cp scripts/mkcompile_h release/
 	cp arch/arm/configs/lineage_kltekor_defconfig release/
 	# updating kernel name
-	sed -i "s;SmartPack-Kernel;$KERNEL_NAME-$KERNEL_VARIANT;" scripts/mkcompile_h;
+	sed -i "s;Stock-Kernel;$KERNEL_NAME-$KERNEL_VARIANT;" scripts/mkcompile_h;
 	# updating kernel version
 	sed -i "s;lineageos;$KERNEL_VERSION;" arch/arm/configs/lineage_kltekor_defconfig;
 	if [ -e output_kor/.config ]; then
