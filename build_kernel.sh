@@ -65,33 +65,33 @@ if [ "klte" == "$KERNEL_VARIANT" ]; then
 	sed -i "s;Stock-Kernel;$KERNEL_NAME-$KERNEL_VARIANT;" scripts/mkcompile_h;
 	# updating kernel version
 	sed -i "s;lineageos;$KERNEL_VERSION;" arch/arm/configs/lineage_klte_defconfig;
-	if [ -e output_eur/.config ]; then
-		rm -f output_eur/.config
-		if [ -e output_eur/arch/arm/boot/zImage ]; then
-			rm -f output_eur/arch/arm/boot/zImage
+	if [ -e output_eur-$TOOLCHAIN/.config ]; then
+		rm -f output_eur-$TOOLCHAIN/.config
+		if [ -e output_eur-$TOOLCHAIN/arch/arm/boot/zImage ]; then
+			rm -f output_eur-$TOOLCHAIN/arch/arm/boot/zImage
 		fi
 	else
-		mkdir output_eur
+		mkdir output_eur-$TOOLCHAIN
 	fi
-	make -C $(pwd) O=output_eur lineage_klte_defconfig && make -j$NUM_CPUS -C $(pwd) O=output_eur
-	if [ -e output_eur/arch/arm/boot/zImage ]; then
+	make -C $(pwd) O=output_eur-$TOOLCHAIN lineage_klte_defconfig && make -j$NUM_CPUS -C $(pwd) O=output_eur-$TOOLCHAIN
+	if [ -e output_eur-$TOOLCHAIN/arch/arm/boot/zImage ]; then
 		echo -e $COLOR_GREEN"\n copying zImage to anykernel directory\n"$COLOR_NEUTRAL
-		cp output_eur/arch/arm/boot/zImage anykernel/
+		cp output_eur-$TOOLCHAIN/arch/arm/boot/zImage anykernel/
 		# compile dtb if required
 		if [ "y" == "$COMPILE_DTB" ]; then
 			echo -e $COLOR_GREEN"\n compiling device tree blob (dtb)\n"$COLOR_NEUTRAL
-			if [ -f output_eur/arch/arm/boot/dt.img ]; then
-				rm -f output_eur/arch/arm/boot/dt.img
+			if [ -f output_eur-$TOOLCHAIN/arch/arm/boot/dt.img ]; then
+				rm -f output_eur-$TOOLCHAIN/arch/arm/boot/dt.img
 			fi
 			chmod 777 tools/dtbToolCM
-			tools/dtbToolCM -2 -o output_eur/arch/arm/boot/dt.img -s 2048 -p output_eur/scripts/dtc/ output_eur/arch/arm/boot/
+			tools/dtbToolCM -2 -o output_eur-$TOOLCHAIN/arch/arm/boot/dt.img -s 2048 -p output_eur-$TOOLCHAIN/scripts/dtc/ output_eur-$TOOLCHAIN/arch/arm/boot/
 			# removing old dtb (if any)
 			if [ -f anykernel/dtb ]; then
 				rm -f anykernel/dtb
 			fi
 			# copying generated dtb to anykernel directory
-			if [ -e output_eur/arch/arm/boot/dt.img ]; then
-				mv -f output_eur/arch/arm/boot/dt.img anykernel/dtb
+			if [ -e output_eur-$TOOLCHAIN/arch/arm/boot/dt.img ]; then
+				mv -f output_eur-$TOOLCHAIN/arch/arm/boot/dt.img anykernel/dtb
 			fi
 		fi
 		echo -e $COLOR_GREEN"\n generating recovery flashable zip file\n"$COLOR_NEUTRAL
@@ -124,33 +124,33 @@ if [ "kltekor" == "$KERNEL_VARIANT" ]; then
 	sed -i "s;Stock-Kernel;$KERNEL_NAME-$KERNEL_VARIANT;" scripts/mkcompile_h;
 	# updating kernel version
 	sed -i "s;lineageos;$KERNEL_VERSION;" arch/arm/configs/lineage_kltekor_defconfig;
-	if [ -e output_kor/.config ]; then
-		rm -f output_kor/.config
-		if [ -e output_kor/arch/arm/boot/zImage ]; then
-			rm -f output_kor/arch/arm/boot/zImage
+	if [ -e output_kor-$TOOLCHAIN/.config ]; then
+		rm -f output_kor-$TOOLCHAIN/.config
+		if [ -e output_kor-$TOOLCHAIN/arch/arm/boot/zImage ]; then
+			rm -f output_kor-$TOOLCHAIN/arch/arm/boot/zImage
 		fi
 	else
-		mkdir output_kor
+		mkdir output_kor-$TOOLCHAIN
 	fi
-	make -C $(pwd) O=output_kor lineage_kltekor_defconfig && make -j$NUM_CPUS -C $(pwd) O=output_kor
-	if [ -e output_kor/arch/arm/boot/zImage ]; then
+	make -C $(pwd) O=output_kor-$TOOLCHAIN lineage_kltekor_defconfig && make -j$NUM_CPUS -C $(pwd) O=output_kor-$TOOLCHAIN
+	if [ -e output_kor-$TOOLCHAIN/arch/arm/boot/zImage ]; then
 		echo -e $COLOR_GREEN"\n copying zImage to anykernel directory\n"$COLOR_NEUTRAL
-		cp output_kor/arch/arm/boot/zImage anykernel/
+		cp output_kor-$TOOLCHAIN/arch/arm/boot/zImage anykernel/
 		# compile dtb if required
 		if [ "y" == "$COMPILE_DTB" ]; then
 			echo -e $COLOR_GREEN"\n compiling device tree blob (dtb)\n"$COLOR_NEUTRAL
-			if [ -f output_kor/arch/arm/boot/dt.img ]; then
-				rm -f output_kor/arch/arm/boot/dt.img
+			if [ -f output_kor-$TOOLCHAIN/arch/arm/boot/dt.img ]; then
+				rm -f output_kor-$TOOLCHAIN/arch/arm/boot/dt.img
 			fi
 			chmod 777 tools/dtbToolCM
-			tools/dtbToolCM -2 -o output_kor/arch/arm/boot/dt.img -s 2048 -p output_kor/scripts/dtc/ output_kor/arch/arm/boot/
+			tools/dtbToolCM -2 -o output_kor-$TOOLCHAIN/arch/arm/boot/dt.img -s 2048 -p output_kor-$TOOLCHAIN/scripts/dtc/ output_kor-$TOOLCHAIN/arch/arm/boot/
 			# removing old dtb (if any)
 			if [ -f anykernel/dtb ]; then
 				rm -f anykernel/dtb
 			fi
 			# copying generated dtb to anykernel directory
-			if [ -e output_kor/arch/arm/boot/dt.img ]; then
-				mv -f output_kor/arch/arm/boot/dt.img anykernel/dtb
+			if [ -e output_kor-$TOOLCHAIN/arch/arm/boot/dt.img ]; then
+				mv -f output_kor-$TOOLCHAIN/arch/arm/boot/dt.img anykernel/dtb
 			fi
 		fi
 		echo -e $COLOR_GREEN"\n generating recovery flashable zip file\n"$COLOR_NEUTRAL
