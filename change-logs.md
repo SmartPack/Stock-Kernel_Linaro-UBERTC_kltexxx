@@ -1,7 +1,7 @@
 # Change-logs
 
 ## 2. Nov 26, 2017
-*Initial release: v2*
+*Release status: v2*
 Enabled various TCP cong algos (Default: Westwood).
 Up-to-date with Linage-OS source code.
 
