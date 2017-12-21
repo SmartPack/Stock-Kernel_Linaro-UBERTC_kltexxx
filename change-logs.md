@@ -1,5 +1,9 @@
 # Change-logs
 
+## 5. Dec 21, 2017
+*Release status: v5*
+Up-to-date with Linage-OS source code.
+
 ## 4. Dec 7, 2017
 *Release status: v4*
 Massive code cleaning to improve the battery and performance. Up-to-date with Linage-OS source code.
