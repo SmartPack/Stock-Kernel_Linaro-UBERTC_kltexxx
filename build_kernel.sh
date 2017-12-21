@@ -105,33 +105,33 @@ else
 		sed -i "s;Stock-Kernel;$KERNEL_NAME-$KERNEL_VARIANT;" scripts/mkcompile_h;
 		# updating kernel version
 		sed -i "s;lineageos;$KERNEL_VERSION;" arch/arm/configs/$KERNEL_DEFCONFIG;
-		if [ -e output_eur-$TOOLCHAIN/.config ]; then
-			rm -f output_eur-$TOOLCHAIN/.config
-			if [ -e output_eur-$TOOLCHAIN/arch/arm/boot/zImage ]; then
-				rm -f output_eur-$TOOLCHAIN/arch/arm/boot/zImage
+		if [ -e output_$KERNEL_VARIANT-$TOOLCHAIN/.config ]; then
+			rm -f output_$KERNEL_VARIANT-$TOOLCHAIN/.config
+			if [ -e output_$KERNEL_VARIANT-$TOOLCHAIN/arch/arm/boot/zImage ]; then
+				rm -f output_$KERNEL_VARIANT-$TOOLCHAIN/arch/arm/boot/zImage
 			fi
 		else
-			mkdir output_eur-$TOOLCHAIN
+			mkdir output_$KERNEL_VARIANT-$TOOLCHAIN
 		fi
-		make -C $(pwd) O=output_eur-$TOOLCHAIN $KERNEL_DEFCONFIG && make -j$NUM_CPUS -C $(pwd) O=output_eur-$TOOLCHAIN
-		if [ -e output_eur-$TOOLCHAIN/arch/arm/boot/zImage ]; then
+		make -C $(pwd) O=output_$KERNEL_VARIANT-$TOOLCHAIN $KERNEL_DEFCONFIG && make -j$NUM_CPUS -C $(pwd) O=output_$KERNEL_VARIANT-$TOOLCHAIN
+		if [ -e output_$KERNEL_VARIANT-$TOOLCHAIN/arch/arm/boot/zImage ]; then
 			echo -e $COLOR_GREEN"\n copying zImage to anykernel directory\n"$COLOR_NEUTRAL
-			cp output_eur-$TOOLCHAIN/arch/arm/boot/zImage anykernel/
+			cp output_$KERNEL_VARIANT-$TOOLCHAIN/arch/arm/boot/zImage anykernel/
 			# compile dtb if required
 			if [ "y" == "$COMPILE_DTB" ]; then
 				echo -e $COLOR_GREEN"\n compiling device tree blob (dtb)\n"$COLOR_NEUTRAL
-				if [ -f output_eur-$TOOLCHAIN/arch/arm/boot/dt.img ]; then
-					rm -f output_eur-$TOOLCHAIN/arch/arm/boot/dt.img
+				if [ -f output_$KERNEL_VARIANT-$TOOLCHAIN/arch/arm/boot/dt.img ]; then
+					rm -f output_$KERNEL_VARIANT-$TOOLCHAIN/arch/arm/boot/dt.img
 				fi
 				chmod 777 tools/dtbToolCM
-				tools/dtbToolCM -2 -o output_eur-$TOOLCHAIN/arch/arm/boot/dt.img -s 2048 -p output_eur-$TOOLCHAIN/scripts/dtc/ output_eur-$TOOLCHAIN/arch/arm/boot/
+				tools/dtbToolCM -2 -o output_$KERNEL_VARIANT-$TOOLCHAIN/arch/arm/boot/dt.img -s 2048 -p output_$KERNEL_VARIANT-$TOOLCHAIN/scripts/dtc/ output_$KERNEL_VARIANT-$TOOLCHAIN/arch/arm/boot/
 				# removing old dtb (if any)
 				if [ -f anykernel/dtb ]; then
 					rm -f anykernel/dtb
 				fi
 				# copying generated dtb to anykernel directory
-				if [ -e output_eur-$TOOLCHAIN/arch/arm/boot/dt.img ]; then
-					mv -f output_eur-$TOOLCHAIN/arch/arm/boot/dt.img anykernel/dtb
+				if [ -e output_$KERNEL_VARIANT-$TOOLCHAIN/arch/arm/boot/dt.img ]; then
+					mv -f output_$KERNEL_VARIANT-$TOOLCHAIN/arch/arm/boot/dt.img anykernel/dtb
 				fi
 			fi
 			echo -e $COLOR_GREEN"\n generating recovery flashable zip file\n"$COLOR_NEUTRAL
