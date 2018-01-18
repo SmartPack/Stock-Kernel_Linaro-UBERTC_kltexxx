@@ -1,5 +1,9 @@
 # Change-logs
 
+## 6. Jan 18, 2018
+*Release status: v6*
+Up-to-date with Linage-OS source code. Merged recent changes from osmosis anykernel repo.
+
 ## 5. Dec 21, 2017
 *Release status: v5*
 Up-to-date with Linage-OS source code.
