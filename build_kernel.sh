@@ -63,6 +63,8 @@ KERNEL_DATE="$(date +"%Y%m%d")"
 
 COMPILE_DTB="y"
 
+PREPARE_RELEASE="y"
+
 NUM_CPUS=""   # number of cpu cores used for build (leave empty for auto detection)
 
 #
@@ -98,6 +100,10 @@ if [ -z "$KERNEL_VARIANT" ]; then
 	echo -e $COLOR_GREEN"\n Please select the variant to build... 'KERNEL_VARIANT' should not be empty...\n"$COLOR_NEUTRAL
 else
 	if [ -e arch/arm/configs/$KERNEL_DEFCONFIG ]; then
+		# check and create release folder.
+		if [ ! -d "release/" ]; then
+			mkdir release/
+		fi
 		# creating backups
 		cp scripts/mkcompile_h release/
 		cp arch/arm/configs/$KERNEL_DEFCONFIG release/
@@ -140,6 +146,10 @@ else
 			rm anykernel/zImage && mv anykernel/$KERNEL_NAME* release/
 			if [ -f anykernel/dtb ]; then
 				rm -f anykernel/dtb
+			fi
+			if [ "y" == "$PREPARE_RELEASE" ]; then
+				echo -e $COLOR_GREEN"\n Preparing for kernel release\n"$COLOR_NEUTRAL
+				cp release/$KERNEL_NAME-$KERNEL_VARIANT-$KERNEL_VERSION-$KERNEL_DATE.zip kernel-release/$KERNEL_NAME-$KERNEL_VARIANT-$TOOLCHAIN.zip
 			fi
 			# restoring backups
 			mv release/mkcompile_h scripts/
