@@ -1,5 +1,12 @@
 # Change-logs
 
+## 8. July 11, 2018
+
+*Release status: v8*
+Initial release for LineageOS-15.1. Please note: No more kernels for LineageOS-14.1
+Two separate builds each for klte and kltekor.
+Tool-chains: Linaro-7.2 & UBERTC-8.0.
+
 ## 7. Feb 22, 2018
 *Release status: v7*
 Up-to-date with Linage-OS source code. Merged recent changes from osmosis anykernel repo.
