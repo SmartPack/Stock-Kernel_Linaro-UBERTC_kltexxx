@@ -1,6 +1,6 @@
 # Change-logs
 
-## 8. July 31, 2018
+## 9. July 31, 2018
 
 *Release status: v9*
 Up-to-date with Linage-OS source code.
