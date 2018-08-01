@@ -100,11 +100,6 @@ else
 		if [ ! -d "release/" ]; then
 			mkdir release/
 		fi
-		# creating backups
-		cp scripts/mkcompile_h release/
-		cp arch/arm/configs/$KERNEL_DEFCONFIG release/
-		# updating kernel version
-		sed -i "s;lineageos;$KERNEL_VERSION;" arch/arm/configs/$KERNEL_DEFCONFIG;
 		if [ -e output_$KERNEL_VARIANT-$TOOLCHAIN/.config ]; then
 			rm -f output_$KERNEL_VARIANT-$TOOLCHAIN/.config
 			if [ -e output_$KERNEL_VARIANT-$TOOLCHAIN/arch/arm/boot/zImage ]; then
@@ -113,7 +108,10 @@ else
 		else
 			mkdir output_$KERNEL_VARIANT-$TOOLCHAIN
 		fi
-		make -C $(pwd) O=output_$KERNEL_VARIANT-$TOOLCHAIN $KERNEL_DEFCONFIG && make -j$NUM_CPUS -C $(pwd) O=output_$KERNEL_VARIANT-$TOOLCHAIN
+		make -C $(pwd) O=output_$KERNEL_VARIANT-$TOOLCHAIN $KERNEL_DEFCONFIG
+		# updating kernel version
+		sed -i "s;lineageos;$KERNEL_VERSION;" output_$KERNEL_VARIANT-$TOOLCHAIN/.config;
+		make -j$NUM_CPUS -C $(pwd) O=output_$KERNEL_VARIANT-$TOOLCHAIN
 		if [ -e output_$KERNEL_VARIANT-$TOOLCHAIN/arch/arm/boot/zImage ]; then
 			echo -e $COLOR_GREEN"\n copying zImage to anykernel directory\n"$COLOR_NEUTRAL
 			cp output_$KERNEL_VARIANT-$TOOLCHAIN/arch/arm/boot/zImage anykernel/
@@ -145,17 +143,11 @@ else
 				echo -e $COLOR_GREEN"\n Preparing for kernel release\n"$COLOR_NEUTRAL
 				cp release/$KERNEL_NAME-$KERNEL_VARIANT-$KERNEL_VERSION-$KERNEL_DATE.zip kernel-release/$KERNEL_NAME-$KERNEL_VARIANT-$TOOLCHAIN.zip
 			fi
-			# restoring backups
-			mv release/mkcompile_h scripts/
-			mv release/$KERNEL_DEFCONFIG arch/arm/configs/
 			echo -e $COLOR_GREEN"\n everything done... please visit "release"...\n"$COLOR_NEUTRAL
 		else
 			if [ -f anykernel/dtb ]; then
 				rm -f anykernel/dtb
 			fi
-			# restoring backups
-			mv release/mkcompile_h scripts/
-			mv release/$KERNEL_DEFCONFIG arch/arm/configs/
 			echo -e $COLOR_GREEN"\n Building error... zImage not found...\n"$COLOR_NEUTRAL
 		fi
 	else
