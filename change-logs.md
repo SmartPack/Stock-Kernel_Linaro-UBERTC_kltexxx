@@ -1,12 +1,14 @@
 # Change-logs
 
-## 9. July 31, 2018
+## 10. Aug 07, 2018
+*Release status: v10*
+Up-to-date with Linage-OS source code. Toolchains updated to GCC 8.2 (Bleeding edge toolchain) and 7.3 (Linaro). Optimizations to work with new toolchain.
 
+## 9. July 31, 2018
 *Release status: v9*
 Up-to-date with Linage-OS source code.
 
 ## 8. July 11, 2018
-
 *Release status: v8*
 Initial release for LineageOS-15.1. Please note: No more kernels for LineageOS-14.1
 Two separate builds each for klte and kltekor.

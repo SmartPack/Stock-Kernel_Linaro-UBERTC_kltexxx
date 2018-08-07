@@ -57,7 +57,7 @@ KERNEL_VARIANT="kltekor"	# only one variant at a time
 
 KERNEL_DEFCONFIG="Stock_@$KERNEL_VARIANT@_defconfig"
 
-KERNEL_VERSION="v9-Linaro-7.2"   # leave as such, if no specific version tag
+KERNEL_VERSION="v10-Linaro-7.3"   # leave as such, if no specific version tag
 
 KERNEL_DATE="$(date +"%Y%m%d")"
 
